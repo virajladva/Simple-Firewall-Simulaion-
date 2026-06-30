@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple Firewall Simulator</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f4f4;
+    margin:0;
+    padding:20px;
+}
+
+.container{
+    max-width:500px;
+    margin:auto;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,.2);
+}
+
+h2{
+    text-align:center;
+    color:#333;
+}
+
+input,select,button{
+    width:100%;
+    padding:10px;
+    margin:10px 0;
+    font-size:16px;
+}
+
+button{
+    background:#007BFF;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+.result{
+    margin-top:20px;
+    padding:15px;
+    border-radius:5px;
+    text-align:center;
+    font-weight:bold;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h2>Simple Firewall Simulation</h2>
+
+<label>Source IP Address</label>
+<input type="text" id="ip" placeholder="Example: 192.168.1.10">
+
+<label>Protocol</label>
+<select id="protocol">
+<option>HTTP</option>
+<option>HTTPS</option>
+<option>FTP</option>
+<option>SSH</option>
+<option>TELNET</option>
+</select>
+
+<button onclick="checkFirewall()">Check Firewall</button>
+
+<div id="output" class="result"></div>
+
+</div>
+
+<script>
+
+function checkFirewall(){
+
+let ip=document.getElementById("ip").value.trim();
+let protocol=document.getElementById("protocol").value;
+
+let output=document.getElementById("output");
+
+// Firewall Rules
+if(ip===""){
+    output.style.background="#ffeeba";
+    output.innerHTML="Please enter an IP address.";
+    return;
+}
+
+// Rule 1: Block 192.168.1.100
+if(ip==="192.168.1.100"){
+    output.style.background="#f8d7da";
+    output.innerHTML="❌ BLOCKED<br>Reason: IP Address is blacklisted.";
+    return;
+}
+
+// Rule 2: Block TELNET
+if(protocol==="TELNET"){
+    output.style.background="#f8d7da";
+    output.innerHTML="❌ BLOCKED<br>Reason: TELNET is not allowed.";
+    return;
+}
+
+// Rule 3: Allow HTTPS
+if(protocol==="HTTPS"){
+    output.style.background="#d4edda";
+    output.innerHTML="✅ ALLOWED<br>Secure HTTPS traffic permitted.";
+    return;
+}
+
+// Rule 4: Allow everything else
+output.style.background="#d4edda";
+output.innerHTML="✅ ALLOWED<br>Traffic passed through firewall.";
+
+}
+
+</script>
+
+</body>
+</html>
